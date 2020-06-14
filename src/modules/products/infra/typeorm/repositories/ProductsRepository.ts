@@ -47,7 +47,7 @@ class ProductsRepository implements IProductsRepository {
     products: IUpdateProductsQuantityDTO[],
   ): Promise<Product[]> {
     const productsIds = products.map(product => {
-      return { id: product.id };
+      return product.id;
     });
 
     const findProducts = await this.ormRepository.find({
@@ -61,10 +61,10 @@ class ProductsRepository implements IProductsRepository {
         ...productdb,
         quantity: productdb.quantity - (product?.quantity || 0),
       };
-      this.ormRepository.save(updatedProduct);
+      // this.ormRepository.save(updatedProduct);
       return updatedProduct;
     });
-
+    await this.ormRepository.save(updatedProducts);
     return updatedProducts;
   }
 }

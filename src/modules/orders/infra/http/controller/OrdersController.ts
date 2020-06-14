@@ -11,8 +11,6 @@ export default class OrdersController {
 
     const findOrder = new FindOrderService(
       container.resolve('OrdersRepository'),
-      container.resolve('ProductsRepository'),
-      container.resolve('CustomersRepository'),
     );
     const orders = await findOrder.execute({ id });
     return response.json(orders);

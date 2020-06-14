@@ -5,23 +5,40 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
-import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+import OrderProduct from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+import Order from '@modules/orders/infra/typeorm/entities/Order';
+import ColumnNumericTransformer from '@shared/infra/typeorm/utils/ColumnNumericTransformer';
 
+@Entity('products')
 class Product {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   name: string;
 
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   price: number;
 
+  @Column()
   quantity: number;
 
-  order_products: OrdersProducts[];
+  @OneToMany(() => OrderProduct, orderProduct => orderProduct.order)
+  order_products: OrderProduct[];
 
+  @CreateDateColumn()
   created_at: Date;
 
+  @UpdateDateColumn()
   updated_at: Date;
 }
 

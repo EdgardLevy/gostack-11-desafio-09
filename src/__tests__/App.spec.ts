@@ -77,7 +77,7 @@ describe('App', () => {
       price: 500,
       quantity: 50,
     });
-
+    console.log(response.body);
     expect(response.body).toEqual(
       expect.objectContaining({
         name: 'Produto 01',

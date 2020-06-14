@@ -27,7 +27,7 @@ class OrdersRepository implements IOrdersRepository {
       const order_product = this.orderProductsRepository.create({
         order_id: order.id,
         product_id: product.product_id,
-        price: product.price * product.quantity,
+        price: product.price,
         quantity: product.quantity,
       });
       order.order_products.push(order_product);

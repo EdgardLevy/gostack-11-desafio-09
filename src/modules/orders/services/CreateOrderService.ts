@@ -45,6 +45,21 @@ class CreateOrderService {
 
     const productsDB = await this.productsRepository.findAllById(productsId);
 
+    if (!productsDB || productsDB.length !== products.length) {
+      throw new AppError('Cannot create order with invalid products');
+    }
+
+    products.forEach(product => {
+      const productDB = productsDB.find(
+        findProductDB => findProductDB.id === product.id,
+      );
+      if (!productDB) return;
+      if (product.quantity > productDB.quantity)
+        throw new AppError(
+          'Cannot create order with products with insufficient quantities',
+        );
+    });
+
     const orderProducts = products.map(product => {
       const productDB = productsDB.find(
         productdb => productdb.id === product.id,
@@ -53,7 +68,7 @@ class CreateOrderService {
       return {
         product_id: product.id,
         quantity: product.quantity,
-        price: product.quantity * (productDB?.price || 0),
+        price: productDB?.price || 0,
       };
     });
 
@@ -61,6 +76,8 @@ class CreateOrderService {
       customer,
       products: orderProducts,
     });
+
+    // await this.productsRepository.updateQuantity(products);
 
     return order;
   }

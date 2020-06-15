@@ -6,12 +6,9 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 
 import OrderProduct from '@modules/orders/infra/typeorm/entities/OrdersProducts';
-import Order from '@modules/orders/infra/typeorm/entities/Order';
-import ColumnNumericTransformer from '@shared/infra/typeorm/utils/ColumnNumericTransformer';
 
 @Entity('products')
 class Product {
@@ -32,7 +29,7 @@ class Product {
   @Column()
   quantity: number;
 
-  @OneToMany(() => OrderProduct, orderProduct => orderProduct.order)
+  @ManyToMany(() => OrderProduct, orderProduct => orderProduct.order)
   order_products: OrderProduct[];
 
   @CreateDateColumn()

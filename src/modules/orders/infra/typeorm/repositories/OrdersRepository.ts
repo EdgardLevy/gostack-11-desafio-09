@@ -20,20 +20,19 @@ class OrdersRepository implements IOrdersRepository {
       customer,
       order_products: [],
     });
-    await this.ormRepository.save(order);
 
     for (let index = 0; index < products.length; index += 1) {
       const product = products[index];
       const order_product = this.orderProductsRepository.create({
-        order_id: order.id,
         product_id: product.product_id,
         price: product.price,
         quantity: product.quantity,
       });
       order.order_products.push(order_product);
     }
-    await this.orderProductsRepository.save(order.order_products);
+
     await this.ormRepository.save(order);
+
     return order;
   }
 

@@ -35,7 +35,6 @@ class OrderProduct {
     type: 'decimal',
     precision: 10,
     scale: 2,
-    transformer: new ColumnNumericTransformer(),
   })
   price: number;
 

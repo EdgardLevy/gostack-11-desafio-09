@@ -25,7 +25,7 @@ class Product {
     type: 'decimal',
     precision: 10,
     scale: 2,
-    transformer: new ColumnNumericTransformer(),
+    // transformer: new ColumnNumericTransformer(),
   })
   price: number;
 

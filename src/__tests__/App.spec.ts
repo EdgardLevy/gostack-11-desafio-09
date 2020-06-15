@@ -77,7 +77,7 @@ describe('App', () => {
       price: 500,
       quantity: 50,
     });
-    // console.log(response.body);
+
     expect(response.body).toEqual(
       expect.objectContaining({
         name: 'Produto 01',
@@ -145,7 +145,7 @@ describe('App', () => {
         order_products: expect.arrayContaining([
           expect.objectContaining({
             product_id: product.body.id,
-            price: 500,
+            price: '500.00',
             quantity: 5,
           }),
         ]),
@@ -299,7 +299,7 @@ describe('App', () => {
         order_products: expect.arrayContaining([
           expect.objectContaining({
             product_id: product.body.id,
-            price: 500,
+            price: '500.00',
             quantity: 5,
           }),
         ]),
